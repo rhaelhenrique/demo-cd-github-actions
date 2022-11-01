@@ -1,0 +1,40 @@
+name: demo-cd-github-actions
+on:
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a one-line script
+        run: echo Hello, world!
+        
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'teste.com'
+    needs: build
+    steps:
+      - name: Run a one-line script
+        run: echo Deploy Dev
+        
+  deploy-qa:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'teste.com'
+    needs: deploy-dev
+    steps:
+      - name: Run a one-line script
+        run: echo Deploy QA
+        
+  deploy-prod:
+    runs-on: ubuntu-latest
+    environment:
+      name: dev
+      url: 'teste.com'
+    needs: deploy-qa
+    steps:
+      - name: Run a one-line script
+        run: echo Deploy PROD
